@@ -54,7 +54,7 @@
     <button onclick="checkNews()">Check</button>
 
     <div class="sample-buttons">
-        <button onclick="checkSample('Breaking: Shocking clickbait story!')">Test Fake</button>
+        <button onclick="checkSample('BREAKING: Scientists confirm drinking hot water cures cancer in 3 days!')">Test Fake</button>
         <button onclick="checkSample('Local community garden opens today')">Test Real</button>
     </div>
 
@@ -84,10 +84,12 @@
                 const data = await response.json();
                 console.log("API response:", data);
 
-                if(data.result === "Fake") {
+                const result = data.result ? data.result.toString() : null;
+
+                if(result === "Fake") {
                     resultDiv.innerText = "Result: Fake";
                     resultDiv.style.color = "red";
-                } else if(data.result === "Real") {
+                } else if(result === "Real") {
                     resultDiv.innerText = "Result: Real";
                     resultDiv.style.color = "green";
                 } else {
