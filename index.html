@@ -10,19 +10,23 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding-top: 50px;
             margin: 0;
         }
         h1 {
             color: #333;
+            margin-bottom: 20px;
         }
         textarea {
-            width: 400px;
-            height: 100px;
+            width: 80%;
+            max-width: 500px;
+            height: 120px;
             padding: 10px;
             font-size: 16px;
             margin-bottom: 10px;
+            resize: vertical;
         }
         button {
             padding: 10px 20px;
@@ -32,11 +36,15 @@
             color: white;
             border: none;
             border-radius: 5px;
+            margin: 5px;
         }
         #result {
             margin-top: 20px;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
+        }
+        .sample-buttons {
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -44,6 +52,12 @@
     <h1>Fake News Detector</h1>
     <textarea id="newsText" placeholder="Paste news here..."></textarea><br>
     <button onclick="checkNews()">Check</button>
+
+    <div class="sample-buttons">
+        <button onclick="checkSample('Breaking: Shocking clickbait story!')">Test Fake</button>
+        <button onclick="checkSample('Local community garden opens today')">Test Real</button>
+    </div>
+
     <div id="result"></div>
 
     <script>
@@ -66,7 +80,9 @@
                     body: JSON.stringify({ news: news })
                 });
 
+                console.log("Response received:", response);
                 const data = await response.json();
+                console.log("Data:", data);
 
                 if(data.result === "Fake") {
                     resultDiv.innerText = "Result: Fake";
@@ -84,6 +100,12 @@
                 console.error(err);
             }
         }
+
+        function checkSample(text) {
+            document.getElementById('newsText').value = text;
+            checkNews();
+        }
     </script>
 </body>
 </html>
+
