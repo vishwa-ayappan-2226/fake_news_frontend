@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f4f4f9;
+            background: #f4f4f9; /* neutral soft background */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -138,25 +138,26 @@
                 const data = await response.json();
                 const result = data.result ? data.result.toString() : "Unknown";
 
-                let width = 0;
+                // Assign percentage and color based on the result
+                let percentage = 0;
                 let color = "green";
 
                 if(result === "Real") {
-                    width = 20;
+                    percentage = 10;  // mostly real
                     color = "green";
                 } else if(result === "Likely Fake") {
-                    width = 50;
-                    color = "yellow";
+                    percentage = 40;
+                    color = "#f9c74f"; // yellowish
                 } else if(result === "Very Likely Fake") {
-                    width = 75;
-                    color = "orange";
+                    percentage = 70;
+                    color = "#f9844a"; // orange
                 } else if(result === "Fake") {
-                    width = 100;
-                    color = "red";
+                    percentage = 95;
+                    color = "#e63946"; // red-ish
                 }
 
-                resultText.innerText = `Result: ${result}`;
-                progressBar.style.width = width + "%";
+                resultText.innerText = `Result: ${result} (${percentage}%)`;
+                progressBar.style.width = percentage + "%";
                 progressBar.style.background = color;
 
             } catch (err) {
